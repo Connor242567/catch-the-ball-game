@@ -22,11 +22,11 @@ function showTarget() {
     target.style.top = `${targetY}px`;
     target.style.display = 'block'; // Show the target
 
-    // Slow down the target appearance
+    // Set a longer timeout to make it very slow
     setTimeout(() => {
-        target.style.display = 'none'; // Hide the target after a longer duration
+        target.style.display = 'none'; // Hide the target after 5 seconds
         showTarget(); // Show another target
-    }, 2000); // Increased from 1000ms to 2000ms (2 seconds)
+    }, 5000); // Increased timeout duration to 5000 milliseconds (5 seconds)
 }
 
 // Function to handle shooting
