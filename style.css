@@ -19,33 +19,29 @@ h1 {
 
 .game-container {
     position: relative;
-    width: 300px;
-    height: 500px;
+    width: 600px;
+    height: 400px;
     background-color: #333;
     overflow: hidden;
-    border-radius: 8px;
+    border: 2px solid #000;
 }
 
-#player {
+#crosshair {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    background-color: #FF4136;
+    width: 20px;
+    height: 20px;
+    background-color: red;
     border-radius: 50%;
+    transform: translate(-50%, -50%);
 }
 
-#ball {
+.target {
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
     width: 30px;
     height: 30px;
-    background-color: #FFD700;
+    background-color: yellow;
     border-radius: 50%;
+    display: none; /* Initially hidden */
 }
 
 .score-board {
