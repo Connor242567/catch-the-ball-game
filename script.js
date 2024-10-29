@@ -1,61 +1,40 @@
-// Variables for game elements
-const player = document.getElementById("player");
-const ball = document.getElementById("ball");
-const scoreBoard = document.getElementById("score");
+const gameContainer = document.getElementById('gameContainer');
+const crosshair = document.getElementById('crosshair');
+const target = document.getElementById('target');
+const scoreBoard = document.getElementById('score');
 
 let score = 0;
-let ballSpeed = 2;
-let gameInterval;
 
-// Set initial player position
-let playerPos = 125;
-const playerSpeed = 15;
-
-// Listen for keypresses to move the player
-document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft" && playerPos > 0) {
-        playerPos -= playerSpeed;
-    } else if (e.key === "ArrowRight" && playerPos < 250) {
-        playerPos += playerSpeed;
-    }
-    player.style.left = playerPos + "px";
+// Function to move the crosshair
+document.addEventListener('mousemove', (e) => {
+    const rect = gameContainer.getBoundingClientRect();
+    crosshair.style.left = `${e.clientX - rect.left}px`;
+    crosshair.style.top = `${e.clientY - rect.top}px`;
 });
 
-// Start the game
-function startGame() {
-    let ballPos = Math.floor(Math.random() * 270);
-    let ballY = 0;
+// Function to show a new target at a random position
+function showTarget() {
+    const rect = gameContainer.getBoundingClientRect();
+    const targetX = Math.random() * (rect.width - 30); // 30 is the width of the target
+    const targetY = Math.random() * (rect.height - 30); // 30 is the height of the target
 
-    ball.style.left = ballPos + "px";
-    ball.style.top = ballY + "px";
+    target.style.left = `${targetX}px`;
+    target.style.top = `${targetY}px`;
+    target.style.display = 'block'; // Show the target
 
-    // Ball falling animation
-    gameInterval = setInterval(() => {
-        ballY += ballSpeed;
-        ball.style.top = ballY + "px";
-
-        // Check for collision with player
-        if (ballY >= 450 && ballY <= 500 && Math.abs(ballPos - playerPos) < 50) {
-            score++;
-            scoreBoard.innerText = score;
-            resetBall();
-        } else if (ballY > 500) {
-            resetBall();
-        }
-
-        // Increase ball speed over time
-        if (score > 0 && score % 5 === 0) {
-            ballSpeed += 0.2;
-        }
-    }, 20);
+    setTimeout(() => {
+        target.style.display = 'none'; // Hide the target after 1 second
+        showTarget(); // Show another target
+    }, 1000);
 }
 
-// Reset ball position after catching or missing
-function resetBall() {
-    ballY = 0;
-    ballPos = Math.floor(Math.random() * 270);
-    ball.style.left = ballPos + "px";
-}
+// Function to handle shooting
+target.addEventListener('click', () => {
+    score++;
+    scoreBoard.innerText = score;
+    target.style.display = 'none'; // Hide the target
+    showTarget(); // Show a new target
+});
 
-// Start the game when the page loads
-startGame();
+// Start the game by showing the first target
+showTarget();
